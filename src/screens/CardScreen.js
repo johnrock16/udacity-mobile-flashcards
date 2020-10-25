@@ -103,11 +103,3 @@ const CardTopic=({title,text})=>(
     <Text style={[globalStyles.text, { padding: 10 }]}>{text}</Text>
   </View>
 )
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'red',
-    justifyContent: 'center',
-  },
-});

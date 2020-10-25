@@ -3,6 +3,7 @@ import { Alert, AsyncStorage, Picker, StyleSheet, Text, TextInput, TouchableOpac
 import { globalStyles } from '../components/globalStyles';
 import SimpleButton from '../components/SimpleButton';
 import { DeckContext } from '../context/DeckContext';
+import useSafeAreaStyles from '../hook/useSafeAreaStyles';
 
 const initialState={
   isCorrect:true,
@@ -10,6 +11,7 @@ const initialState={
 
 const CreateCardScreen=(props)=>{
   const [state,setState] = useState(initialState);
+  const stylesSA = useSafeAreaStyles();
   const deckContext = useContext(DeckContext);
 
   const {isCorrect}= state;
@@ -30,7 +32,7 @@ const CreateCardScreen=(props)=>{
   }
 
   return (
-    <View style={{flex:1,justifyContent:'center'}}>
+    <View style={{flex:1,justifyContent:'center',...stylesSA.container}}>
       <View style={{border:'solid', margin:10, borderWidth:1}}>
         <View style={{padding:10}}>
           <Text style={globalStyles.title}>ADD CARD</Text>

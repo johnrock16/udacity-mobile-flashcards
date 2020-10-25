@@ -22,7 +22,7 @@ const ListDeckSreen=({navigation})=>{
     <View style={[{flex:1},stylesSA.container]}>
       <View style={{padding:30}}>
         <View>
-          <Text style={globalStyles.title}>LIST DECK SCREEN</Text>
+          <Text style={globalStyles.title}>LIST DECK</Text>
           <Text style={globalStyles.text}>You can learn anything in anywhere</Text>
         </View>
       </View>

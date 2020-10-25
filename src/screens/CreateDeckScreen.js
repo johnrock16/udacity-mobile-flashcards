@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Alert, AsyncStorage, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { globalStyles } from '../components/globalStyles';
 import { DeckContext } from '../context/DeckContext';
+import useSafeAreaStyles from '../hook/useSafeAreaStyles';
 
 const initialState={
   text:'',
@@ -10,6 +11,7 @@ const initialState={
 const CreateDeckScreen=()=>{
   const [state,setState] = useState(initialState);
   const deckContext = useContext(DeckContext);
+  const stylesSA = useSafeAreaStyles();
 
   const {text}= state;
 
@@ -26,7 +28,7 @@ const CreateDeckScreen=()=>{
   }
 
   return (
-    <View style={{flex:1,justifyContent:'center'}}>
+    <View style={{flex:1,justifyContent:'center',...stylesSA.container}}>
       <View style={{border:'solid', margin:10, borderWidth:1}}>
         <View style={{padding:10}}>
           <Text style={globalStyles.title}>ADD DECK</Text>
@@ -44,11 +46,3 @@ const CreateDeckScreen=()=>{
   );
 }
 export default CreateDeckScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'red',
-    justifyContent:'center',
-  },
-});
