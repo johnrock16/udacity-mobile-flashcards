@@ -30,7 +30,9 @@ const ListDeckSreen=({navigation})=>{
       <FlatList
         style={{paddingHorizontal:30}}
         data={decks}
-        renderItem={({item},index)=>(<FlashCardComponent key={`card${item.name}${index}`} onPress={()=>onHandleSelectDeck(item)} title={item.name} text={`${item.cards.length} FlashCards`} />)}
+        keyExtractor={(item,index) =>`card${item.name}${index}`}
+        renderItem={({item})=>{
+          return(<FlashCardComponent onPress={()=>onHandleSelectDeck(item)} title={item.name} text={`${item.cards.length} FlashCards`} />)}}
         scrollEnabled={true}
       />
     </View>

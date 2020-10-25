@@ -5,18 +5,14 @@ import SimpleButton from '../components/SimpleButton';
 import { DeckContext } from '../context/DeckContext';
 
 const initialState={
-  question:'',
-  answer:'',
-  isCorrect:false,
+  isCorrect:true,
 }
 
 const CreateCardScreen=(props)=>{
   const [state,setState] = useState(initialState);
   const deckContext = useContext(DeckContext);
 
-  const {question,answer,isCorrect}= state;
-
-  const {navigation} = props;
+  const {isCorrect}= state;
   const {currentDeck} = deckContext;
 
   const onHandleChangeTextQuestion=(v)=>{
@@ -41,25 +37,17 @@ const CreateCardScreen=(props)=>{
           <Text style={globalStyles.text}>Create a new card to deck</Text>
         </View>
         <View>
-          <View style={{padding:30, height:'auto',width:'100%'}}>
-            <Text style={[globalStyles.text,{fontWeight:'bold'}]}>Question</Text>
-            <TextInput style={globalStyles.textInput} onChangeText={onHandleChangeTextQuestion} placeholder={'Question here'}/>
-          </View>
-          <View style={{padding:30, height:'auto',width:'100%'}}>
-            <Text style={[globalStyles.text,{fontWeight:'bold'}]}>Answer</Text>
-            <TextInput style={globalStyles.textInput} onChangeText={onHandleChangeTextAnswer} placeholder={'Answer here'}/>
-          </View>
+          <TextInputField title={'Question'} onChangeText={onHandleChangeTextQuestion} placeholder={'Question here'}/>
+          <TextInputField title={'Answer'} onChangeText={onHandleChangeTextAnswer} placeholder={'Answer here'}/>
+
           <View style={{padding:30, height:'auto',width:'100%'}}>
             <Text style={[globalStyles.text,{fontWeight:'bold'}]}>Is Correct?</Text>
-            <Picker
-              selectedValue={isCorrect}
-              style={{ height: 50, width: 150 }}
-              onValueChange={(itemValue) => onHandleChangeIsCorrect(itemValue)}
-            >
+            <Picker selectedValue={isCorrect} style={{ height: 50, width: 150 }} onValueChange={(itemValue) => onHandleChangeIsCorrect(itemValue)}>
               <Picker.Item label="Yes" value={true} />
               <Picker.Item label="No" value={false} />
             </Picker>
           </View>
+
           <SimpleButton title={'Create new FlashCard'} style={globalStyles.button} onPress={onHandleCreate}/>
         </View>
       </View>
@@ -67,6 +55,13 @@ const CreateCardScreen=(props)=>{
   );
 }
 export default CreateCardScreen;
+
+const TextInputField=({title,...props})=>(
+  <View style={{padding:30, height:'auto',width:'100%'}}>
+    <Text style={[globalStyles.text,{fontWeight:'bold'}]}>{title}</Text>
+    <TextInput style={globalStyles.textInput} {...props}/>
+  </View>
+)
 
 const styles = StyleSheet.create({
   container: {

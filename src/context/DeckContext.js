@@ -48,16 +48,15 @@ export const DeckContextProvider = ({ children }) => {
   }
 
   const createFlashCard=async (id,flashCard)=>{
-    // const {question,answer,isCorrect} = flashCard;
     let storage=await AsyncStorage.getItem('FlashCards');
     try {
       storage=JSON.parse(storage);
       storage[id]={...storage[id],cards:[...storage[id].cards,flashCard]};
-      
+  
       AsyncStorage.setItem('FlashCards',JSON.stringify(storage))
-      console.log(storage[id]);
       setCards(storage[id].cards);
       setDecks(storage);
+      
       Alert.alert('Card Criado com Sucesso!')
     } catch (error) {
       console.log('Erro ao criar FlashCard',error);
