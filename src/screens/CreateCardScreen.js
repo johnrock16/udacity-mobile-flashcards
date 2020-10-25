@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Alert, AsyncStorage, Picker, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { globalStyles } from '../components/globalStyles';
 import SimpleButton from '../components/SimpleButton';
+import { DeckContext } from '../context/DeckContext';
 
 const initialState={
   question:'',
@@ -11,11 +12,12 @@ const initialState={
 
 const CreateCardScreen=(props)=>{
   const [state,setState] = useState(initialState);
+  const deckContext = useContext(DeckContext);
 
   const {question,answer,isCorrect}= state;
 
   const {navigation} = props;
-  const {deck} = props.route.params
+  const {currentDeck} = deckContext;
 
   const onHandleChangeTextQuestion=(v)=>{
     setState((pv)=>({...pv,question:v}));
@@ -28,22 +30,7 @@ const CreateCardScreen=(props)=>{
   }
 
   const onHandleCreate=()=>{
-    createFlashCard()
-  }
-
-  const createFlashCard=async ()=>{
-    console.log(state)
-    console.log(deck.id)
-    let storage=await AsyncStorage.getItem('FlashCards');
-    try {
-      storage=JSON.parse(storage);
-      storage[deck.id]={...storage[deck.id],cards:[...storage[deck.id].cards,state]};
-      console.log(storage);
-      AsyncStorage.setItem('FlashCards',JSON.stringify(storage))
-      Alert.alert('Card Criado com Sucesso!')
-    } catch (error) {
-      console.log('Erro ao criar FlashCard');
-    }
+    deckContext.createFlashCard(currentDeck.id,state)
   }
 
   return (

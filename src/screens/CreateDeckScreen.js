@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Alert, AsyncStorage, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { globalStyles } from '../components/globalStyles';
+import { DeckContext } from '../context/DeckContext';
 
 const initialState={
   text:'',
@@ -8,6 +9,7 @@ const initialState={
 
 const CreateDeckScreen=()=>{
   const [state,setState] = useState(initialState);
+  const deckContext = useContext(DeckContext);
 
   const {text}= state;
 
@@ -20,20 +22,7 @@ const CreateDeckScreen=()=>{
   }
 
   const createFlashCard=async (text)=>{
-    let storage=await AsyncStorage.getItem('FlashCards');
-    try {
-      storage=JSON.parse(storage);
-      if(!storage){
-        storage=[{name:text,cards:[],id:0}];
-      }
-      else{
-        storage.push({name:text,cards:[],id:storage.length});
-      }
-      AsyncStorage.setItem('FlashCards',JSON.stringify(storage))
-      Alert.alert('Card Criado com Sucesso!')
-    } catch (error) {
-      console.log('Erro ao criar FlashCard');
-    }
+    deckContext.createDeck(text)
   }
 
   return (

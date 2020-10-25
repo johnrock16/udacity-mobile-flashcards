@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AsyncStorage, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import FlashCardComponent from '../components/FlashCardComponent';
 import { globalStyles } from '../components/globalStyles';
 import SimpleButton from '../components/SimpleButton';
+import { DeckContext } from '../context/DeckContext';
 import useSafeAreaStyles from '../hook/useSafeAreaStyles';
 
 const initialState = {
@@ -16,10 +17,11 @@ const initialState = {
 
 const CardScreen = (props) => {
   const [state, setState] = useState(initialState);
+  const deckContext = useContext(DeckContext);
   const stylesSA = useSafeAreaStyles();
 
   const { showAnswer,lastAnswer, currentCard,acerts,idCard } = state;
-  const { cards} = props.route.params.deck;
+  const { cards} = deckContext.currentDeck
   
 
   const onHandleShow = () =>{
@@ -29,12 +31,10 @@ const CardScreen = (props) => {
   const onHandleAnswer = (v) => {
     let accerts=acerts;
     if(v==currentCard?.isCorrect) accerts+=1
-    console.log('acertos',acerts)
     setState((pv)=>({...pv,acerts:accerts,idCard:pv.idCard+1}))
   }
 
   useEffect(()=>{
-    console.log('aqui',idCard)
     if(idCard<cards.length){
       setState((pv)=>({...pv,currentCard:cards[idCard]}))
     }
