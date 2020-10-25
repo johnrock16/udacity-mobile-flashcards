@@ -4,6 +4,7 @@ import FlashCardComponent from '../components/FlashCardComponent';
 import { globalStyles } from '../components/globalStyles';
 import SimpleButton from '../components/SimpleButton';
 import { DeckContext } from '../context/DeckContext';
+import { NotificationContext } from '../context/NotificationContext';
 import useSafeAreaStyles from '../hook/useSafeAreaStyles';
 
 const initialState = {
@@ -18,6 +19,7 @@ const initialState = {
 const CardScreen = ({navigation}) => {
   const [state, setState] = useState(initialState);
   const deckContext = useContext(DeckContext);
+  const notificationContext = useContext(NotificationContext);
   const stylesSA = useSafeAreaStyles();
 
   const { showAnswer,lastAnswer, currentCard,acerts,idCard } = state;
@@ -47,6 +49,7 @@ const CardScreen = ({navigation}) => {
       setState((pv)=>({...pv,currentCard:cards[idCard]}))
     }
     else if(!lastAnswer){
+      notificationContext.removeSchedulePerDayNotification();
       setState((pv)=>({...pv,lastAnswer:true}))
     }
   },[idCard])

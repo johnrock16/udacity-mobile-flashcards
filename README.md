@@ -12,9 +12,11 @@ yarn install
 
 ## Usage
 
-```python
+```bash
 expo start
 ```
+## Tests
+Every test has been realized with a android emulator.
 
 ## Contributing
 This project doesn't accept contribuittions

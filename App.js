@@ -6,20 +6,23 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import DeckStack from './src/navigation/DeckStack';
 import { DeckContextProvider } from './src/context/DeckContext';
+import { NotificationContextProvider } from './src/context/NotificationContext';
 
 const Tab = createBottomTabNavigator();
 
 const App=()=>{
   return (
     <SafeAreaProvider>
-      <DeckContextProvider>
-        <NavigationContainer>
-          <Tab.Navigator screenOptions={screenOptions} tabBarOptions={tabBarOptions}>
-            <Tab.Screen name="Home" component={DeckStack} />
-            <Tab.Screen name="CreateDeck" component={CreateDeckScreen} />
-          </Tab.Navigator>
-        </NavigationContainer>
-      </DeckContextProvider>
+      <NotificationContextProvider>
+        <DeckContextProvider>
+          <NavigationContainer>
+            <Tab.Navigator screenOptions={screenOptions} tabBarOptions={tabBarOptions}>
+              <Tab.Screen name="Home" component={DeckStack} />
+              <Tab.Screen name="CreateDeck" component={CreateDeckScreen} />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </DeckContextProvider>
+      </NotificationContextProvider>
     </SafeAreaProvider>
   );
 }
