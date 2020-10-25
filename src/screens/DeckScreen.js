@@ -28,7 +28,7 @@ const ListDeckSreen = (props) => {
       navigation.navigate('CardScreen');
       return;
     } 
-    Alert.alert('Wait','Before start add flashcards')
+    Alert.alert('Wait','Before start, add flashcards')
   }
 
   return (

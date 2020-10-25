@@ -15,7 +15,7 @@ const initialState = {
   lastAnswer:false,
 }
 
-const CardScreen = (props) => {
+const CardScreen = ({navigation}) => {
   const [state, setState] = useState(initialState);
   const deckContext = useContext(DeckContext);
   const stylesSA = useSafeAreaStyles();
@@ -28,10 +28,18 @@ const CardScreen = (props) => {
     setState((pv)=>({...pv,showAnswer:true}))
   }
 
+  const onHandleRestart = ()=>{
+    setState((pv)=>(initialState));
+  }
+
   const onHandleAnswer = (v) => {
     let accerts=acerts;
     if(v==currentCard?.isCorrect) accerts+=1
     setState((pv)=>({...pv,acerts:accerts,idCard:pv.idCard+1}))
+  }
+
+  const onHandleGoToDeck = ()=>{
+    navigation.navigate('DeckScreen');
   }
 
   useEffect(()=>{
@@ -62,6 +70,8 @@ const CardScreen = (props) => {
           <View style={{width:'100%',alignItems:'center'}}>
             <Text style={globalStyles.title}>QUIZ COMPLETED</Text>
             <Text style={globalStyles.text}>{`${acerts}/${cards.length} correct Answers`}</Text>
+            <SimpleButton title={'Restart Quiz'} onPress={onHandleRestart}/>
+            <SimpleButton title={'Go to the Deck'} onPress={onHandleGoToDeck}/>
           </View>
           :
           <View>
@@ -72,8 +82,8 @@ const CardScreen = (props) => {
                   <CardTopic title={'ANSWER'} text={currentCard?.answer} />
                   <CardTopic title={`That's correct?`} text={'YES OR NO?'} />
                   <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                    <SimpleButton title={'YES'} onPress={()=>onHandleAnswer(true)}/>
-                    <SimpleButton title={'NO'} onPress={()=>onHandleAnswer(false)}/>
+                    <SimpleButton title={'Correct'} onPress={()=>onHandleAnswer(true)}/>
+                    <SimpleButton title={'Incorrect'} onPress={()=>onHandleAnswer(false)}/>
                   </View>
                 </View>
               ):

@@ -41,9 +41,9 @@ export const DeckContextProvider = ({ children }) => {
       }
       AsyncStorage.setItem('FlashCards', JSON.stringify(storage))
       setDecks(storage);
-      Alert.alert('Deck Criado com Sucesso!')
+      Alert.alert('Sucess!','Deck has been successfully created!')
     } catch (error) {
-      console.log('Erro ao criar FlashCard', error);
+      console.log('Error on create Deck', error);
     }
   }
 
@@ -56,10 +56,9 @@ export const DeckContextProvider = ({ children }) => {
       AsyncStorage.setItem('FlashCards',JSON.stringify(storage))
       setCards(storage[id].cards);
       setDecks(storage);
-      
-      Alert.alert('Card Criado com Sucesso!')
+      Alert.alert('Sucess','Card has been successfully created!')
     } catch (error) {
-      console.log('Erro ao criar FlashCard',error);
+      console.log('Error on create FlashCard',error);
     }
   }
 
